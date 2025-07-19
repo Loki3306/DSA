@@ -5,35 +5,29 @@ class Solution {
 
         Arrays.sort(intervals, (a, b) -> Integer.compare(a[0], b[0]));
 
-        boolean exists = true;
+        List<List<Integer>> list = new ArrayList<>();
+        list.add(Arrays.asList(intervals[0][0], intervals[0][1]));
 
-        while (exists) {
-            exists = false;
-            List<List<Integer>> list = new ArrayList<>();
+        for (int i = 1; i < intervals.length; i++) {
+            int lastStart = list.get(list.size() - 1).get(0);
+            int lastEnd = list.get(list.size() - 1).get(1);
 
-            int i = 0;
-            while (i < intervals.length) {
-                if (i < intervals.length - 1 && intervals[i][1] >= intervals[i + 1][0]) {
-                    int start = intervals[i][0];
-                    int end = Math.max(intervals[i][1], intervals[i + 1][1]);
-                    list.add(Arrays.asList(start, end));
-                    exists = true;
-                    i += 2; // skip next since it's merged
-                } else {
-                    list.add(Arrays.asList(intervals[i][0], intervals[i][1]));
-                    i++;
-                }
+            int currStart = intervals[i][0];
+            int currEnd = intervals[i][1];
+
+            if (currStart <= lastEnd) {
+                list.set(list.size() - 1, Arrays.asList(lastStart, Math.max(lastEnd, currEnd)));
+            } else {
+                list.add(Arrays.asList(currStart, currEnd));
             }
-
-            // Convert list back to intervals for next round
-            int[][] newIntervals = new int[list.size()][2];
-            for (int j = 0; j < list.size(); j++) {
-                newIntervals[j][0] = list.get(j).get(0);
-                newIntervals[j][1] = list.get(j).get(1);
-            }
-            intervals = newIntervals;
         }
 
-        return intervals;
+        int[][] result = new int[list.size()][2];
+        for (int i = 0; i < list.size(); i++) {
+            result[i][0] = list.get(i).get(0);
+            result[i][1] = list.get(i).get(1);
+        }
+
+        return result;
     }
 }
