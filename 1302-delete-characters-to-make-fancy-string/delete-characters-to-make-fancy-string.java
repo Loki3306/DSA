@@ -1,20 +1,16 @@
 class Solution {
     public String makeFancyString(String s) {
         StringBuilder sb = new StringBuilder();
-        int cnt = 1; // First char is always valid
-        sb.append(s.charAt(0));
+        char prev = s.charAt(0);
+        int count = 1;
+        sb.append(prev);
 
         for (int i = 1; i < s.length(); i++) {
             char curr = s.charAt(i);
-            if (curr == s.charAt(i - 1)) {
-                cnt++;
-            } else {
-                cnt = 1; // reset counter on new char
-            }
+            count = (curr == prev) ? count + 1 : 1;
 
-            if (cnt < 3) {
-                sb.append(curr); // allow only up to 2 same chars
-            }
+            if (count < 3) sb.append(curr);
+            prev = curr;
         }
 
         return sb.toString();
