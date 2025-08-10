@@ -1,21 +1,15 @@
 class Solution {
-    static Set<String> powerSignatures = new HashSet<>();
-    static {
-        for (int i = 0; i < 31; i++) {
-            powerSignatures.add(signature(1 << i));
-        }
-    }
-
     public boolean reorderedPowerOf2(int n) {
-        return powerSignatures.contains(signature(n));
+        String s = sortDigits(n);
+        for (int i = 0; i < 31; i++) {
+            if (s.equals(sortDigits(1 << i))) return true;
+        }
+        return false;
     }
 
-    private static String signature(int n) {
-        int[] count = new int[10];
-        while (n > 0) {
-            count[n % 10]++;
-            n /= 10;
-        }
-        return Arrays.toString(count);
+    private String sortDigits(int n) {
+        char[] arr = String.valueOf(n).toCharArray();
+        Arrays.sort(arr);
+        return new String(arr);
     }
 }
