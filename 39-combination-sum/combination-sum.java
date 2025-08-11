@@ -1,27 +1,22 @@
-import java.util.*;
-
 class Solution {
-    public List<List<Integer>> combinationSum(int[] candidates, int target) {
-        List<List<Integer>> result = new ArrayList<>();
-        backtrack(candidates, 0, target, new ArrayList<>(), result);
+    public List<List<Integer>> combinationSum(int[] nums, int target) {
+        List<List<Integer>> result= new ArrayList<>();
+        backtrack(nums,target,0,new ArrayList<>(),result);
         return result;
     }
 
-    private void backtrack(int[] nums, int index, int remain, List<Integer> path, List<List<Integer>> result) {
-        if (remain == 0) {
-            result.add(new ArrayList<>(path));
+    public void backtrack(int[] nums,int target,int index,List<Integer> list,List<List<Integer>> result){
+        if(target == 0){
+            result.add(new ArrayList<>(list));
             return;
         }
-        if (remain < 0 || index == nums.length) {
+        if(target < 0 || index == nums.length ){
             return;
         }
 
-        
-        path.add(nums[index]);
-        backtrack(nums, index, remain - nums[index], path, result);
-        path.remove(path.size() - 1); 
-
-    
-        backtrack(nums, index + 1, remain, path, result);
+        list.add(nums[index]);
+        backtrack(nums,target-nums[index],index,list,result);
+        list.remove(list.size()-1);
+        backtrack(nums,target,index+1,list,result);
     }
 }
