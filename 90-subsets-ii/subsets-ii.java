@@ -6,9 +6,9 @@ class Solution {
         return result;
     }
 
-    public void answer(int[] nums,int index,List<List<Integer>> result, List<Integer> list){
-        if(index== nums.length){
-            result.add(new ArrayList<>(list));
+    public void answer(int nums[],int index,List<List<Integer>> result,List<Integer> list){
+        if(index == nums.length){
+            result.add(new ArrayList(list));
             return;
         }
 
@@ -16,10 +16,9 @@ class Solution {
         answer(nums,index+1,result,list);
         list.remove(list.size()-1);
 
-        int nextIndex=index+1;
-        while(nextIndex < nums.length && nums[nextIndex] == nums[nextIndex-1]){
-            nextIndex++;
-        }
+        int nextIndex=index +1;
+        while(nextIndex < nums.length && nums[nextIndex] == nums[index]) nextIndex++;
         answer(nums,nextIndex,result,list);
+
     }
 }
