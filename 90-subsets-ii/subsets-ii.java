@@ -8,7 +8,7 @@ class Solution {
 
     public void answer(int[] nums,int index,List<List<Integer>> result, List<Integer> list){
         if(index== nums.length){
-            if(!result.contains(list))
+            
             result.add(new ArrayList<>(list));
             return;
         }
