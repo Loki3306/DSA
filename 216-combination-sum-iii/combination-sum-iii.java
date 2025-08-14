@@ -7,7 +7,7 @@ class Solution {
 
     public void answer(int number, int currSum, List<List<Integer>> result, List<Integer> list, int n, int k) {
 
-        if (currSum == n && list.size() == k) {
+        if (currSum == n && list.size() == k) { 
             result.add(new ArrayList<>(list));
             return;
         }
