@@ -28,7 +28,7 @@ class Solution {
         String letter=digitToLetters.get(digits.charAt(index));
         for( char c : letter.toCharArray()){
             sb.append(c);
-            answer(result,digits,digitToLetters,index + 1,sb);
+            answer(result,digits,digitToLetters,index+1,sb);
             sb.deleteCharAt(sb.length()-1);
         }
     }
