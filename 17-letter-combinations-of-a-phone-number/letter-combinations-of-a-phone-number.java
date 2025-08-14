@@ -1,7 +1,7 @@
 class Solution {
     public List<String> letterCombinations(String digits) {
-        if(digits == null || digits.length()==0) return new ArrayList<>();
-        List<String> result=new ArrayList<>();
+        if (digits.length() == 0)
+            return new ArrayList<>();
         Map<Character, String> digitToLetters = new HashMap<>();
         digitToLetters.put('2', "abc");
         digitToLetters.put('3', "def");
@@ -12,9 +12,12 @@ class Solution {
         digitToLetters.put('8', "tuv");
         digitToLetters.put('9', "wxyz");
 
+        List<String> result= new ArrayList<>();
         answer(result,digits,digitToLetters,0,new StringBuilder());
         return result;
     }
+
+
 
     public void answer(List<String> result,String digits, Map<Character, String> digitToLetters, int index, StringBuilder sb){
         if(index == digits.length()){
@@ -22,10 +25,10 @@ class Solution {
             return;
         }
 
-        String letters = digitToLetters.get(digits.charAt(index));
-        for(char c : letters.toCharArray()){
+        String letter=digitToLetters.get(digits.charAt(index));
+        for( char c : letter.toCharArray()){
             sb.append(c);
-            answer(result,digits,digitToLetters,index+1,sb);
+            answer(result,digits,digitToLetters,index + 1,sb);
             sb.deleteCharAt(sb.length()-1);
         }
     }
