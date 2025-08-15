@@ -1,36 +1,41 @@
 class Solution {
     public boolean exist(char[][] board, String word) {
-        int n=board.length;
-        int m=board[0].length;
+        int n = board.length;
+        int m = board[0].length;
 
-        int index=0;
-
-        for(int i=0;i<n;i++){
-            for(int j=0;j<m;j++){
-                if(board[i][j] == word.charAt(index)){
-                    if(backtrack(board,word,i,j,n,m,index)) return true;
-                } 
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                if (backtrack(board, word, i, j, 0)) {
+                    return true;
+                }
             }
         }
-
         return false;
     }
 
-    public boolean backtrack(char[][] board,String word,int i,int j,int n,int m,int index){
-        if(index == word.length()) return true;
+    public boolean backtrack(char[][] board, String word, int i, int j, int index) {
+        // out of bounds
+        if (i < 0 || j < 0 || i >= board.length || j >= board[0].length) return false;
 
-        if(i < 0 || j<0 || i==n || j==m || board[i][j] != word.charAt(index) || board[i][j] == '!' ) return false;
+        // mismatch
+        if (board[i][j] != word.charAt(index)) return false;
 
-        char ch=board[i][j];
-        board[i][j]='!';
+        // last character matched
+        if (index == word.length() - 1) return true;
 
-        boolean top= backtrack(board,word,i-1,j,n,m,index+1);
-        boolean bottom= backtrack(board,word,i+1,j,n,m,index+1);
-        boolean right= backtrack(board,word,i,j+1,n,m,index+1);
-        boolean left= backtrack(board,word,i,j-1,n,m,index+1);
+        // mark visited
+        char temp = board[i][j];
+        board[i][j] = '!';
 
-        board[i][j]=ch;
+        // explore 4 directions
+        boolean found = backtrack(board, word, i + 1, j, index + 1) ||
+                        backtrack(board, word, i - 1, j, index + 1) ||
+                        backtrack(board, word, i, j + 1, index + 1) ||
+                        backtrack(board, word, i, j - 1, index + 1);
 
-        return top||right||bottom||left;
+        // unmark
+        board[i][j] = temp;
+
+        return found;
     }
 }
