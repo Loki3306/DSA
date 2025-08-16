@@ -1,13 +1,8 @@
 class Solution {
-    public int maximum69Number (int num) {
-        StringBuilder sb=new StringBuilder(String.valueOf(num));
-        int index=0;
-        while(index < sb.length() && sb.charAt(index) == '9'){
-            index++;
-        }
-        if(index == sb.length()) return num;
-
-        sb.replace(index,index+1,"9");
-        return Integer.parseInt(sb.toString());
+    public int maximum69Number(int num) {
+        String s = String.valueOf(num);
+        int idx = s.indexOf('6');
+        if (idx == -1) return num;
+        return Integer.parseInt(s.substring(0, idx) + "9" + s.substring(idx + 1));
     }
 }
