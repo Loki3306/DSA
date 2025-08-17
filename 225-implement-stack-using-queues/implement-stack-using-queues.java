@@ -1,37 +1,65 @@
 class MyStack {
-    Queue<Integer> q;
+    int[] arr;
+    int front, rear, size, capacity;
 
     public MyStack() {
-        q = new LinkedList<>();
+        this(1000); // default capacity
+    }
+
+    public MyStack(int cap) {
+        capacity = cap;
+        arr = new int[capacity];
+        front = 0;
+        rear = 0;
+        size = 0;
+    }
+
+    private void add(int x) {
+        if(size == capacity) throw new RuntimeException("Stack overflow");
+        arr[rear] = x;
+        rear = (rear + 1) % capacity;
+        size++;
+    }
+
+    private int remove() {
+        if(size == 0) throw new RuntimeException("Stack underflow");
+        int val = arr[front];
+        front = (front + 1) % capacity;
+        size--;
+        return val;
+    }
+
+    private int peek() {
+        if(size == 0) throw new RuntimeException("Stack is empty");
+        return arr[front];
     }
 
     public void push(int x) {
-        q.add(x);
-        for (int i = 0; i < q.size() - 1; i++) {
-            q.add(q.remove());
+        add(x);
+        for(int i = 0; i < size - 1; i++) {
+            add(remove());
         }
     }
 
     public int pop() {
-        return q.remove();
+        return remove();
     }
 
     public int top() {
-        return q.peek();
+        return peek();
     }
 
     public boolean empty() {
-        if (q.size() == 0)
-            return true;
-        return false;
+        return size == 0;
     }
 }
 
 /**
- * Your MyStack object will be instantiated and called as such:
- * MyStack obj = new MyStack();
- * obj.push(x);
- * int param_2 = obj.pop();
- * int param_3 = obj.top();
- * boolean param_4 = obj.empty();
+ * Example usage:
+ * MyStack stack = new MyStack();
+ * stack.push(1);
+ * stack.push(2);
+ * System.out.println(stack.top()); // 2
+ * System.out.println(stack.pop()); // 2
+ * System.out.println(stack.empty()); // false
  */
