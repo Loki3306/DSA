@@ -5,20 +5,20 @@ class Solution {
         double[] dp = new double[n + 1];
         dp[0] = 1.0;
 
-        double windowSum = 1.0; // sum of last maxPts probabilities
+        double sum = 1.0; 
         double result = 0.0;
 
         for (int i = 1; i <= n; i++) {
-            dp[i] = windowSum / maxPts;
+            dp[i] = sum / maxPts;
 
             if (i < k) {
-                windowSum += dp[i];  // keep adding if still drawing
+                sum += dp[i];  
             } else {
-                result += dp[i];     // if stopped, add to result
+                result += dp[i];     
             }
 
             if (i - maxPts >= 0) {
-                windowSum -= dp[i - maxPts]; // slide window
+                sum -= dp[i - maxPts]; 
             }
         }
 
