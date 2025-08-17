@@ -1,65 +1,53 @@
 class MyStack {
     int[] arr;
-    int front, rear, size, capacity;
+    int cap,front,rear,size;
 
     public MyStack() {
-        this(1000); // default capacity
+        arr= new int[1000];
+        front=0;
+        size=0;
+        rear=-1;    
     }
-
-    public MyStack(int cap) {
-        capacity = cap;
-        arr = new int[capacity];
-        front = 0;
-        rear = 0;
-        size = 0;
-    }
-
-    private void add(int x) {
-        if(size == capacity) throw new RuntimeException("Stack overflow");
-        arr[rear] = x;
-        rear = (rear + 1) % capacity;
+    
+    public void add(int x){
+        rear++;
+        arr[rear]=x;
         size++;
     }
 
-    private int remove() {
-        if(size == 0) throw new RuntimeException("Stack underflow");
-        int val = arr[front];
-        front = (front + 1) % capacity;
+    public int remove(){
+        int x=arr[front];
+        front++;
         size--;
-        return val;
+        return x;
     }
 
-    private int peek() {
-        if(size == 0) throw new RuntimeException("Stack is empty");
-        return arr[front];
-    }
 
     public void push(int x) {
         add(x);
-        for(int i = 0; i < size - 1; i++) {
+        for(int i=0;i<size-1;i++){
             add(remove());
         }
     }
-
+    
     public int pop() {
         return remove();
     }
-
+    
     public int top() {
-        return peek();
+        return arr[front];
     }
-
+    
     public boolean empty() {
-        return size == 0;
+        return (size==0);
     }
 }
 
 /**
- * Example usage:
- * MyStack stack = new MyStack();
- * stack.push(1);
- * stack.push(2);
- * System.out.println(stack.top()); // 2
- * System.out.println(stack.pop()); // 2
- * System.out.println(stack.empty()); // false
+ * Your MyStack object will be instantiated and called as such:
+ * MyStack obj = new MyStack();
+ * obj.push(x);
+ * int param_2 = obj.pop();
+ * int param_3 = obj.top();
+ * boolean param_4 = obj.empty();
  */
