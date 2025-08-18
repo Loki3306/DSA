@@ -1,49 +1,38 @@
 class Solution {
     public boolean judgePoint24(int[] cards) {
         double[] nums=new double[cards.length];
-        for(int i=0;i<cards.length;i++){
-            nums[i]=cards[i];
-        }
-        return backtrack(nums);
+        for(int i=0;i<cards.length;i++) nums[i]=cards[i];
+        return backtrack(nums, nums.length);
     }
 
+    private boolean backtrack(double[] nums, int n) {
+        if (n == 1) return Math.abs(nums[0] - 24) < 1e-6;
 
-    public boolean backtrack(double[] nums){
-        if(nums.length==1){
-            return Math.abs(nums[0] - 24) < Math.pow(10,-6);
-        }
+        for (int i = 0; i < n; i++) {
+            for (int j = i + 1; j < n; j++) {  // ✅ avoid duplicates
+                double a = nums[i], b = nums[j];
 
-        for(int i=0;i<nums.length;i++){
-            for(int j=0;j<nums.length;j++){
-                if(i != j){
-                double[] nextArr=new double[nums.length-1];
-                int idx=0;
+                double[] candidates = {
+                    a + b,
+                    a - b,
+                    b - a,
+                    a * b,
+                    b != 0 ? a / b : Double.NaN,
+                    a != 0 ? b / a : Double.NaN
+                };
 
-                for(int k=0;k<nums.length;k++){
-                    if(k!=i && k!=j) nextArr[idx++]=nums[k];
-                }
+                for (double val : candidates) {
+                    if (Double.isNaN(val)) continue;
+                    if (Math.abs(val) > 1e6) continue;  // ✅ pruning
 
-                for(double val: compute(nums[i],nums[j])){
-                    nextArr[idx]=val;
-                    if(backtrack(nextArr)) return true;
-                }
-                
+                    nums[j] = val;
+                    nums[i] = nums[n - 1];  // replace i with last element
+                    if (backtrack(nums, n - 1)) return true;
+                    nums[i] = a;  // restore
+                    nums[j] = b;  // restore
                 }
             }
         }
         return false;
-    }
-
-
-
-    public double[] compute(double a,double b){
-        return new double[]{
-            a+b,
-            a-b,
-            b-a,
-            a*b,
-            a!=0 ? b/a: Double.NaN,
-            b!=0 ? a/b: Double.NaN,
-        };
     }
 }
