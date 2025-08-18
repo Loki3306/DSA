@@ -7,31 +7,32 @@ class Solution {
         return backtrack(nums);
     }
 
+
     public boolean backtrack(double[] nums){
-        if(nums.length == 1){
-            return (Math.abs(nums[0] - 24) < 1e-6);
+        if(nums.length==1){
+            return Math.abs(nums[0] - 24) < Math.pow(10,-6);
         }
 
         for(int i=0;i<nums.length;i++){
             for(int j=0;j<nums.length;j++){
-                if(i!=j){
-                    double[] newArr=new double[nums.length-1];
-                    int idx=0;
-                    for(int k=0;k<nums.length;k++){
-                        if(k!=i && k!=j) newArr[idx++]=nums[k];
-                    }
+                if(i != j){
+                double[] nextArr=new double[nums.length-1];
+                int idx=0;
 
-                    for(double val: compute(nums[i],nums[j])){
-                        newArr[idx]=val;
-                        if(backtrack(newArr)) return true;
-                    }
+                for(int k=0;k<nums.length;k++){
+                    if(k!=i && k!=j) nextArr[idx++]=nums[k];
+                }
+
+                for(double val: compute(nums[i],nums[j])){
+                    nextArr[idx]=val;
+                    if(backtrack(nextArr)) return true;
+                }
+                
                 }
             }
         }
-
         return false;
     }
-
 
 
 
@@ -42,7 +43,7 @@ class Solution {
             b-a,
             a*b,
             a!=0 ? b/a: Double.NaN,
-            b!=0 ? a/b: Double.NaN
+            b!=0 ? a/b: Double.NaN,
         };
     }
 }
