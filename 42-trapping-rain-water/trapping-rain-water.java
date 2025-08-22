@@ -5,12 +5,11 @@ class Solution {
         int[] suffix=new int[n];
 
         prefix[0]=height[0];
-        for(int i=1;i<n;i++){
-            prefix[i]=Math.max(prefix[i-1],height[i]);
-        }
         suffix[n-1]=height[n-1];
-        for(int i=n-2;i>=0;i--){
-            suffix[i]=Math.max(suffix[i+1],height[i]);
+
+        for(int i=1,j=n-2; i<n && j>=0; i++,j--){
+            prefix[i]=Math.max(prefix[i-1],height[i]);
+            suffix[j]=Math.max(suffix[j+1],height[j]);
         }
 
         int ans=0;
@@ -19,5 +18,5 @@ class Solution {
         }
 
         return ans;
-    }   
+    }
 }
