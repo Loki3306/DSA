@@ -1,20 +1,24 @@
 class Solution {
     public int trap(int[] height) {
         int n=height.length;
-        int[] prefix=new int[n];
-        int[] suffix=new int[n];
+        int ans=0,left=0,right=n-1,leftMax=0,rightMax=0;
 
-        prefix[0]=height[0];
-        suffix[n-1]=height[n-1];
-
-        for(int i=1,j=n-2; i<n && j>=0; i++,j--){
-            prefix[i]=Math.max(prefix[i-1],height[i]);
-            suffix[j]=Math.max(suffix[j+1],height[j]);
-        }
-
-        int ans=0;
-        for(int i=0;i<n;i++){
-            ans += Math.min(prefix[i], suffix[i]) - height[i];
+        while(left<=right){
+            if(height[left] <= height[right]){
+                if(height[left] >= leftMax){
+                    leftMax=height[left];
+                }else{
+                    ans+=leftMax-height[left];
+                }
+                left++;
+            }else{
+                if(height[right] >= rightMax)                    {
+                    rightMax=height[right];
+                }else{
+                    ans+=rightMax-height[right];
+                }
+                right--;
+            }
         }
 
         return ans;
