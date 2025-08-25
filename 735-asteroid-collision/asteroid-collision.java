@@ -2,22 +2,22 @@ class Solution {
     public int[] asteroidCollision(int[] asteroids) {
         int top=-1;
 
-        for(int a:asteroids){
-            boolean destroyed=false;
-
-            while(top >=0 && asteroids[top] > 0 && a<0){
-                if(asteroids[top] < -a){
+        for(int arr: asteroids){
+            boolean des=true;
+            while(top >=0 && arr <0 && asteroids[top] > 0){
+                if(asteroids[top] < -arr){
                     top--;
                     continue;
-                }else if(asteroids[top] == -a){
+                }
+                else if(asteroids[top] == -arr){
                     top--;
                 }
-                destroyed=true;
+                des=false;
                 break;
             }
 
-            if(!destroyed){
-                asteroids[++top]=a;
+            if(des){
+                asteroids[++top]=arr;
             }
         }
 
