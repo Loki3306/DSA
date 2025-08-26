@@ -5,10 +5,8 @@ class Solution {
         while(mid<=high){
             if(nums[mid] ==0){
                 int temp=nums[low];
-                nums[low]=nums[mid];
-                nums[mid]=temp;
-                mid++;
-                low++;
+                nums[low++]=nums[mid];
+                nums[mid++]=temp;
             }
 
             else if(nums[mid]==1){
@@ -17,9 +15,9 @@ class Solution {
 
             else{
                 int temp=nums[high];
-                nums[high]=nums[mid];
+                nums[high--]=nums[mid];
                 nums[mid]=temp;
-                high--;
+                
             }
         }
     }
