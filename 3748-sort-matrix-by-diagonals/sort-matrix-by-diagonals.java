@@ -2,27 +2,22 @@ import java.util.*;
 
 class Solution {
     public int[][] sortMatrix(int[][] grid) {
-        int n=grid.length;
-        Map<Integer,List<Integer>> map=new HashMap<>();
-        for(int i=0;i<n;i++){
-            for(int j=0;j<n;j++){
-                int d=i-j;
-                map.computeIfAbsent(d,k->new ArrayList<>()).add(grid[i][j]);
-            }
+        int n = grid.length;
+
+        for (int start = 0; start < n; start++) {
+            List<Integer> diag = new ArrayList<>();
+            for (int i = start, j = 0; i < n && j < n; i++, j++) diag.add(grid[i][j]);
+            if (start >= 0) diag.sort(Collections.reverseOrder());
+            for (int i = start, j = 0, k = 0; i < n && j < n; i++, j++, k++) grid[i][j] = diag.get(k);
         }
-        for(int d:map.keySet()){
-            if(d>=0) map.get(d).sort(Collections.reverseOrder());
-            else Collections.sort(map.get(d));
+
+        for (int start = 1; start < n; start++) {
+            List<Integer> diag = new ArrayList<>();
+            for (int i = 0, j = start; i < n && j < n; i++, j++) diag.add(grid[i][j]);
+            diag.sort(null);
+            for (int i = 0, j = start, k = 0; i < n && j < n; i++, j++, k++) grid[i][j] = diag.get(k);
         }
-        Map<Integer,Integer> idx=new HashMap<>();
-        for(int i=0;i<n;i++){
-            for(int j=0;j<n;j++){
-                int d=i-j;
-                int k=idx.getOrDefault(d,0);
-                grid[i][j]=map.get(d).get(k);
-                idx.put(d,k+1);
-            }
-        }
+
         return grid;
     }
 }
