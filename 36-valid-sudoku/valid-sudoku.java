@@ -2,30 +2,43 @@ import java.util.*;
 
 class Solution {
     public boolean isValidSudoku(char[][] board) {
-        HashSet<Character>[] rows = new HashSet[9];
-        HashSet<Character>[] cols = new HashSet[9];
-        HashSet<Character>[] boxes = new HashSet[9];
+        int n = board.length;
 
-        for(int i=0;i<9;i++){
-            rows[i] = new HashSet<>();
-            cols[i] = new HashSet<>();
-            boxes[i] = new HashSet<>();
+        // check rows
+        for(int i=0;i<n;i++){
+            HashSet<Character> set = new HashSet<>();
+            for(int j=0;j<n;j++){
+                if(board[i][j] != '.'){
+                    if(set.contains(board[i][j])) return false;
+                    set.add(board[i][j]);
+                }
+            }
         }
 
-        for(int i=0;i<9;i++){
-            for(int j=0;j<9;j++){
-                char c = board[i][j];
-                if(c == '.') continue;
-
-                int boxIndex = (i/3)*3 + (j/3);
-
-                if(rows[i].contains(c) || cols[j].contains(c) || boxes[boxIndex].contains(c)){
-                    return false;
+        // check columns
+        for(int i=0;i<n;i++){
+            HashSet<Character> set = new HashSet<>();
+            for(int j=0;j<n;j++){
+                if(board[j][i] != '.'){
+                    if(set.contains(board[j][i])) return false;
+                    set.add(board[j][i]);
                 }
+            }
+        }
 
-                rows[i].add(c);
-                cols[j].add(c);
-                boxes[boxIndex].add(c);
+        
+        for(int row=0;row<9;row+=3){
+            for(int col=0;col<9;col+=3){
+                HashSet<Character> set = new HashSet<>();
+                for(int i=0;i<3;i++){
+                    for(int j=0;j<3;j++){
+                        char c = board[row+i][col+j];
+                        if(c != '.'){
+                            if(set.contains(c)) return false;
+                            set.add(c);
+                        }
+                    }
+                }
             }
         }
 
