@@ -1,7 +1,10 @@
 class Solution {
     public int findClosest(int x, int y, int z) {
-        if(Math.abs(z-x) > Math.abs(z-y)) return 2;
-        else if(Math.abs(z-x) < Math.abs(z-y)) return 1;
-        else return 0;
+        long d1=Math.abs(z-x);
+        long d2=Math.abs(z-y);
+
+        if(d1 < d2) return 1;
+        else if ( d2 < d1 ) return 2;
+        else return 0; 
     }
 }
