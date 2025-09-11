@@ -1,19 +1,22 @@
 class Solution {
     public String sortVowels(String s) {
-        String vowels = "aeiouAEIOU";
+        String vowels="AEIOUaeiou";
         char[] arr = s.toCharArray();
-        StringBuilder temp = new StringBuilder();
-        for (char c : arr) {
-            if (vowels.indexOf(c) != -1) temp.append(c);
+        StringBuilder sb=new StringBuilder();
+        for(char ch : arr){
+            if(vowels.indexOf(ch) != -1) sb.append(ch);
         }
-        char[] v = temp.toString().toCharArray();
-        java.util.Arrays.sort(v);
-        int idx = 0;
-        for (int i = 0; i < arr.length; i++) {
-            if (vowels.indexOf(arr[i]) != -1) {
-                arr[i] = v[idx++];
+
+        char[] vowelsArray = sb.toString().toCharArray();
+        Arrays.sort(vowelsArray);
+        int index=0;
+
+        for(int i=0;i<arr.length;i++){
+            if(vowels.indexOf(arr[i]) != -1){
+                arr[i]=vowelsArray[index++];
             }
         }
+
         return new String(arr);
     }
 }
