@@ -5,9 +5,13 @@ class Solution {
         int ans=0;
         
         while(left < right){
-            ans= Math.max(Math.min(height[left],height[right]) * (right-left),ans);
-            if(height[left]  < height[right]) left++;
-            else right--;
+            if(height[left] < height[right]){
+                ans=Math.max(ans, height[left]*(right-left));
+                left++;
+            }else{
+                ans=Math.max(ans, height[right]*(right-left));
+                right--;
+            }
         }
 
         return ans;
