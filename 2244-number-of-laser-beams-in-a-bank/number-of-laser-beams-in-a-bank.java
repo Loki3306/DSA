@@ -3,8 +3,11 @@ class Solution {
         int prev = 0;
         int ans = 0;
         for(String row : bank){
-            int ones = (int)row.chars().filter(ch -> ch == '1').count();
-            if(ones > 0){
+            int ones = 0;
+            for(int i=0;i<row.length();i++){
+                if(row.charAt(i)=='1') ones++;
+            }
+            if(ones>0){
                 ans += prev * ones;
                 prev = ones;
             }
