@@ -1,15 +1,18 @@
 class Solution {
     public int numberOfBeams(String[] bank) {
-        int prev = 0;
-        int ans = 0;
-        for(String row : bank){
-            int ones = 0;
-            for(int i=0;i<row.length();i++){
-                if(row.charAt(i)=='1') ones++;
+        int ans=0;
+        int prev=0;
+        int n=bank.length;
+        for(int i=0;i<n;i++){
+            String s=bank[i];
+            int ones=0;
+            int len=s.length();
+            for(int j=0;j<len;j++){
+                if(s.charAt(j)=='1') ones++;
             }
             if(ones>0){
-                ans += prev * ones;
-                prev = ones;
+                ans+=prev*ones;
+                prev=ones;
             }
         }
         return ans;
