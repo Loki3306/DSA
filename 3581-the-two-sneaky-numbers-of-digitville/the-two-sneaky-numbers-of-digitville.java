@@ -1,1 +1,15 @@
-class Solution { public int[] getSneakyNumbers(int[] nums) { Arrays.sort(nums); int n=nums.length; int[] ans=new int[2]; int index=0; for(int i=0;i<n-1;i++){ if(nums[i+1] == nums[i]) ans[index++]=nums[i]; } return ans; } }
+class Solution {
+    public int[] getSneakyNumbers(int[] nums) {
+        Arrays.sort(nums);
+        int n = nums.length;
+        int[] ans = new int[2];
+        int index = 0;
+        for (int i = 0; i < n - 1; i++) {
+            if (nums[i + 1] == nums[i])
+                ans[index++] = nums[i];
+
+            if(index == 2) break;    
+        }
+        return ans;
+    }
+}
