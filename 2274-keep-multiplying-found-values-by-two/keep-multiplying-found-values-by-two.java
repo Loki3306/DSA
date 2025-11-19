@@ -1,15 +1,15 @@
 class Solution {
     public int findFinalValue(int[] nums, int original) {
         
-        int ans=original;
+        
 
         for(int i=0;i<nums.length;i++){
-            if(nums[i]==ans){
+            if(nums[i]==original){
                 i=-1;
-                ans*=2;
+                original*=2;
             }
         }
 
-        return ans;
+        return original;
     }
 }
