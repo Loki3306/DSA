@@ -1,28 +1,14 @@
-/**
- * Definition for a binary tree node.
- * public class TreeNode {
- *     int val;
- *     TreeNode left;
- *     TreeNode right;
- *     TreeNode() {}
- *     TreeNode(int val) { this.val = val; }
- *     TreeNode(int val, TreeNode left, TreeNode right) {
- *         this.val = val;
- *         this.left = left;
- *         this.right = right;
- *     }
- * }
- */
+import java.util.*;
 
 class Pair {
     TreeNode node;
     int row;
     int col;
 
-    Pair(TreeNode n, int r, int c) {
-        node = n;
-        row = r;
-        col = c;
+    Pair(TreeNode node, int row, int col) {
+        this.node = node;
+        this.row = row;
+        this.col = col;
     }
 }
 
@@ -35,10 +21,12 @@ class Solution {
         Queue<Pair> q = new ArrayDeque<>();
         q.offer(new Pair(root, 0, 0));
 
-        List<Pair> nodes = new ArrayList<>();
+        List<Pair> list = new ArrayList<>();
+
         while (!q.isEmpty()) {
             Pair p = q.poll();
-            nodes.add(p);
+            list.add(p);
+
             TreeNode node = p.node;
             int row = p.row;
             int col = p.col;
@@ -49,7 +37,7 @@ class Solution {
                 q.offer(new Pair(node.right, row + 1, col + 1));
         }
 
-        nodes.sort((a, b) -> {
+        Collections.sort(list, (a, b) -> {
             if (a.col != b.col)
                 return a.col - b.col;
             if (a.row != b.row)
@@ -57,20 +45,27 @@ class Solution {
             return a.node.val - b.node.val;
         });
 
-        int prevCol = nodes.get(0).col;
-        List<Integer> curr = new ArrayList<>();
+        int prevCol = Integer.MIN_VALUE;
+        List<Integer> temp = new ArrayList<>();
 
-        for (Pair p : nodes) {
+        for (int i = 0; i < list.size(); i++) {
+
+            Pair p = list.get(i);
+
             if (p.col != prevCol) {
-                ans.add(curr);
-                curr = new ArrayList<>();
+                if (temp.size() != 0) {
+                    ans.add(temp);
+                }
+                temp = new ArrayList<>();
                 prevCol = p.col;
             }
-            curr.add(p.node.val);
+
+            temp.add(p.node.val);
         }
 
-        ans.add(curr);
+        if (temp.size() != 0) {
+            ans.add(temp);
+        }
         return ans;
-
     }
 }
