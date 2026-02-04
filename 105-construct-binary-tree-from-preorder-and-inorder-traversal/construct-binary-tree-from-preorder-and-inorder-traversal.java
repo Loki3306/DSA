@@ -1,7 +1,7 @@
 class Solution{
 
 public int index=0;
-public java.util.HashMap<Integer,Integer> map=new java.util.HashMap<>();
+public HashMap<Integer,Integer> map=new HashMap<>();
 
 public TreeNode buildTree(int[] preorder,int[] inorder){
 
