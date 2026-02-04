@@ -1,43 +1,31 @@
-/**
- * Definition for a binary tree node.
- * public class TreeNode {
- *     int val;
- *     TreeNode left;
- *     TreeNode right;
- *     TreeNode() {}
- *     TreeNode(int val) { this.val = val; }
- *     TreeNode(int val, TreeNode left, TreeNode right) {
- *         this.val = val;
- *         this.left = left;
- *         this.right = right;
- *     }
- * }
- */
-class Solution {
-    public int index = 0;
+class Solution{
 
-    public TreeNode buildTree(int[] preorder, int[] inorder) {
-        return construct(preorder,inorder,0,preorder.length - 1);    
-    }
+public int index=0;
+public java.util.HashMap<Integer,Integer> map=new java.util.HashMap<>();
 
-    public TreeNode construct(int[] preorder,int[] inorder,int s,int e){
-        if(s > e) return null;
+public TreeNode buildTree(int[] preorder,int[] inorder){
 
-        TreeNode root = new TreeNode(preorder[index]);
-        index++;
+for(int i=0;i<inorder.length;i++){
+map.put(inorder[i],i);
+}
 
-        int position = findIndex(inorder,root.val,s,e);
+return construct(preorder,inorder,0,inorder.length-1);
+}
 
-        root.left = construct(preorder,inorder,s,position-1);
-        root.right = construct(preorder,inorder,position+1,e);
+public TreeNode construct(int[] preorder,int[] inorder,int s,int e){
 
-        return root;
-    }
+if(s>e){
+return null;
+}
 
-    public int findIndex(int[] arr,int key,int s,int e){
-        for(int i=s;i<=e;i++){
-            if(arr[i] == key) return i;
-        }
-        return -1;
-    }
+TreeNode root=new TreeNode(preorder[index]);
+index++;
+
+int position=map.get(root.val);
+
+root.left=construct(preorder,inorder,s,position-1);
+root.right=construct(preorder,inorder,position+1,e);
+
+return root;
+}
 }
