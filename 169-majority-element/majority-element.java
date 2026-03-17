@@ -1,21 +1,18 @@
 class Solution {
     public int majorityElement(int[] nums) {
-         int candidate=nums[0];
-         int cnt=1;
-         int n=nums.length;
+        int cnt = 1;
+        int cand = nums[0];
 
-         for(int i=1;i<n;i++){
-            if(nums[i]==candidate) cnt++;
-            else cnt--;
-
+        for(int i = 1;i<nums.length;i++){
             if(cnt == 0){
-                candidate=nums[i];
-                cnt=1;
+                cnt = 1;
+                cand = nums[i];
             }
-         }
 
-        return candidate;
+            else if(nums[i] == cand) cnt ++;
+            else cnt --;
+        }
 
-         
+        return cand;
     }
 }
