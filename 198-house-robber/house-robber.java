@@ -7,24 +7,13 @@ class Solution {
 
         int[] dp = new int[n];
         dp[0] = nums[0];
-        dp[1] = nums[1];
+        dp[1] = Math.max(dp[0],nums[1]);
 
         for(int i=2;i<n;i++){
-            dp[i] = Integer.MIN_VALUE;
-
-            for(int j=i-2;j>=0;j--){
-                dp[i] = Math.max(dp[j],dp[i]);
-            }
-
-            dp[i] += nums[i];
+            dp[i] = Math.max(dp[i-1],dp[i-2] + nums[i]);
         }
 
-        int max = Integer.MIN_VALUE;
 
-        for(int i=0;i<n;i++){
-            max = Math.max(max,dp[i]);
-        }
-
-        return max;
+        return dp[n-1];
     }
 }
