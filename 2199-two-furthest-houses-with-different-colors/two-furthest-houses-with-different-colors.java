@@ -1,16 +1,11 @@
 class Solution {
     public int maxDistance(int[] nums) {
-        int maxM = Integer.MIN_VALUE;
         int n = nums.length;
+        int left = n - 1;
+        while(left >=0 && nums[left] == nums[0]) left--;
+        int right = 0;
+        while(right < n && nums[right] == nums[n-1]) right++;
 
-        for(int i=0;i<n-1;i++){
-            int index = n-1;
-
-            while(index >= i && nums[index] == nums[i]) index--;
-
-            maxM = Math.max(maxM,Math.abs(index-i));
-        }
-
-        return maxM;
+        return Math.max(left,n-right-1);
     }
 }
