@@ -6,10 +6,7 @@ class Solution {
         for(int i=0;i<n-1;i++){
             int index = n-1;
 
-            while(index >= i){
-                if(nums[index] == nums[i]) index--;
-                else break;
-            }
+            while(index >= i && nums[index] == nums[i]) index--;
 
             maxM = Math.max(maxM,Math.abs(index-i));
         }
