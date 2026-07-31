@@ -1,44 +1,33 @@
 class Solution {
     public int minimumPushes(String word) {
-        int cnt;
-        List<Integer> freq = new ArrayList<>();
-        char[] chars = word.toCharArray();
-        Arrays.sort(chars);
-        int len = word.length();
-
-        int curr = chars[len-1];
-        cnt = 1;
-        for(int i=len-2;i>=0;i--){
-            if(chars[i] != curr){
-                freq.add(cnt);
-                cnt = 0;
-                curr = chars[i];
-            }
-
-            cnt++;
+        int[] freq = new int[26];
+        for (int i = 0; i < word.length(); i++) {
+            freq[word.charAt(i) - 'a']++;
         }
-        freq.add(cnt);
-
-        freq.sort(Comparator.reverseOrder());
-
-
 
         int mult = 1;
-        cnt = 0;
-        int ind = 0;
         int ans = 0;
-        while(ind < freq.size()){
-            ans += (mult*freq.get(ind) ) ;
+        int cnt = 0;
+        int ind = 0;
+        Arrays.sort(freq);
+
+        for (int i = 0, j = freq.length - 1; i < j; i++, j--) {
+            int temp = freq[i];
+            freq[i] = freq[j];
+            freq[j] = temp;
+        }
+
+        while (ind < 26) {
+            ans += (mult * freq[ind]);
             cnt++;
 
-            if(cnt == 8){
+            if (cnt == 8) {
                 cnt = 0;
                 mult++;
             }
 
             ind++;
         }
-        
 
         return ans;
     }
