@@ -1,22 +1,32 @@
 class Solution {
     public List<String> generateParenthesis(int n) {
-        List<String> result=new ArrayList<>();
-        generate(result,2*n,0,0,"");
-        return result;
+        int lCnt = n;
+        int rCnt = n;
+        List<String> list = new ArrayList<>();
+        StringBuilder sb = new StringBuilder("");
+        solve(list,lCnt,rCnt,2*n,sb);
+        return list;
     }
 
-    public void generate(List<String> list,int max, int op,int cl, String result){
-        if(result.length() == max){
-            list.add(result);
+    public void solve(List<String> list,int lCnt,int rCnt,int len, StringBuilder sb){
+        if(sb.length() == len){
+            list.add(sb.toString());
             return;
         }
 
-        if(op < max/2){
-            generate(list,max,op+1,cl,result+'(');
-        }   
-
-        if(cl < op){
-            generate(list,max,op,cl+1,result+')');
+        if(lCnt == rCnt ){
+            solve(list,lCnt-1,rCnt,len,sb.append("("));
+            sb.deleteCharAt(sb.length()-1);
+        }
+        else{
+            if(lCnt > 0){
+                solve(list,lCnt-1,rCnt,len,sb.append("("));
+                sb.deleteCharAt(sb.length()-1);
+            }
+            if(rCnt > lCnt){
+                solve(list,lCnt,rCnt-1,len,sb.append(")"));
+                sb.deleteCharAt(sb.length()-1);
+            }
         }
     }
 }
